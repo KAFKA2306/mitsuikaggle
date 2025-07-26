@@ -1,0 +1,12 @@
+{
+  "experiment": "Production_424_Targets",
+  "samples": 1917,
+  "features": 557,
+  "targets": 424,
+  "best_sharpe_score": 1.1911680408317646,
+  "final_sharpe_score": 1.1911680408317646,
+  "final_mean_correlation": 0.058018779359941784,
+  "final_std_correlation": 0.048707468107882276,
+  "total_time_minutes": 15.128787553310394,
+  "device": "cuda"
+}

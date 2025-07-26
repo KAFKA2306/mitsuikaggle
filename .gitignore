@@ -104,3 +104,5 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+
+.env/kaggle.json
