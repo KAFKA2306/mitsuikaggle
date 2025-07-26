@@ -1,0 +1,76 @@
+# Claude Rules for Mitsui Commodity Prediction Challenge
+
+## Project Context
+This is a competitive ML project for predicting commodity price differences to win a $100,000 competition. The system has proven 121.8% performance improvement with ensemble methods.
+
+## Code Guidelines
+
+### Python Style
+- Follow PEP 8 standards
+- Use type hints for function signatures
+- Maximum line length: 100 characters
+- Use meaningful variable names related to financial/ML concepts
+- Document complex ML algorithms with inline comments
+
+### ML/Data Science Conventions
+- Always use cross-validation for model evaluation
+- Implement proper time series splitting (no data leakage)
+- Log all experimental results to CSV/JSON files
+- Use random seeds for reproducibility
+- Validate input data shapes and types
+
+### File Organization
+- Keep experiments in `src/experiments/`
+- Store utilities in `src/utils/`
+- Place data processing in `src/data/`
+- Save feature engineering in `src/features/`
+- Document everything in `docs/`
+
+### Performance Requirements
+- Optimize for Sharpe-like score metric (mean/std of Spearman correlations)
+- Focus on variance reduction over mean improvement
+- Target 424 commodity predictions efficiently
+- Memory-efficient processing for 16.7GB RAM limit
+
+### Security & Safety
+- Never commit API keys or credentials
+- Validate all input data before processing
+- Handle missing values gracefully
+- Use safe file paths (no hardcoded absolute paths)
+
+## Testing Standards
+- Write unit tests for core functions
+- Test with sample data before full dataset
+- Validate model outputs are reasonable
+- Test ensemble combinations systematically
+
+## Documentation
+- Update CLAUDE.md with major changes
+- Document experimental results in detail
+- Keep README.md current with latest status
+- Use clear commit messages for git
+
+## Experimental Protocol
+- Run baseline models first
+- Test on small subsets before full scale (50→100→424 targets)
+- Save intermediate results for comparison
+- Use proper validation metrics throughout
+
+## Priority Areas
+1. Ensemble method optimization (proven 121.8% improvement)
+2. Feature engineering for 500+ features
+3. Multi-target learning strategies
+4. Variance reduction techniques
+5. Competition metric optimization
+
+## Error Handling
+- Graceful handling of missing data
+- Robust model training with early stopping
+- Fallback to simpler models if complex ones fail
+- Log errors and warnings appropriately
+
+## Resource Management
+- Monitor memory usage for large datasets
+- Use efficient data structures (pandas, numpy)
+- Implement batch processing for 424 targets
+- Profile code for performance bottlenecks
