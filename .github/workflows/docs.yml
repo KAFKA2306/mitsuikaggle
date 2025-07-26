@@ -35,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install mkdocs-material mkdocs-git-revision-date-localized-plugin
+          pip install mkdocs mkdocs-material mkdocs-git-revision-date-localized-plugin
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
