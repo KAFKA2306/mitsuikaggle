@@ -15,13 +15,23 @@ import lightgbm as lgb
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from typing import Dict, List, Tuple, Optional, Any
+:19
+-------
 import logging
 import sys
 import os
 from pathlib import Path
 import uuid
 from datetime import datetime
+
+# Configure logging at the very beginning
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    filename='experiment_run.log', # Log to a file
+    filemode='w' # Overwrite the log file each time
+)
+logger = logging.getLogger(__name__)
 
 # Add src to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -31,17 +41,14 @@ from src.features.feature_engineering import AdvancedFeatureEngineer
 from src.evaluation.metrics import calculate_sharpe_like_score, CompetitionEvaluator
 from src.evaluation.cross_validation import TimeSeriesSplit
 from src.utils.experiment_manager import (
-    IntelligentExperimentRunner, 
-    ExperimentConfig, 
+    IntelligentExperimentRunner,
+    ExperimentConfig,
     create_experiment_config
 )
-
-logger = logging.getLogger(__name__)
 
 
 class IndependentModelsApproach:
     """Independent models for each target - baseline approach."""
-    
     def __init__(self, model_params: Dict = None, random_state: int = 42):
         self.model_params = model_params or self._get_default_params()
         self.random_state = random_state
@@ -745,33 +752,40 @@ class MultiTargetExperimentRunner:
                 logger.info(f"  • {insight}")
         
         return experiment_ids
-
-
+:750
+-------
 def main():
+    log_file_path = Path('experiment_run.log').resolve()
+    print(f"DEBUG: Logging to file: {log_file_path}") # Force print for debugging
+    logger.info(f"Logging to file: {log_file_path}")
     """Main function to run multi-target experiments."""
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-    
     logger.info("Initializing Multi-Target Learning Experiments...")
     
     # Initialize experiment manager
     experiment_manager = IntelligentExperimentRunner()
     
-    # Create experiment runner
-    runner = MultiTargetExperimentRunner(experiment_manager)
+    # Create experiment runner for quick test (100 rows, 3 targets)
+    logger.info("Running quick test for diagnosis: 100 rows, 3 targets")
+    runner_test = MultiTargetExperimentRunner(experiment_manager, sample_rows=100)
+    runner_test.setup_data(sample_targets=3) # Sample 3 targets as per instruction
     
-    # Run all experiments
-    experiment_ids = runner.run_all_experiments()
-    
-    # Save final report
+    # Run only independent models for quick test
+    independent_test_results_path = runner_test.run_independent_models_experiment()
+    logger.info(f"Quick test independent models results saved to: {independent_test_results_path}")
+
+    # Original full experiment run (commented out for quick test)
+    # logger.info("Initializing Multi-Target Learning Experiments (Full Run)...")
+    # experiment_manager_full = IntelligentExperimentRunner()
+    # runner_full = MultiTargetExperimentRunner(experiment_manager_full)
+    # runner_full.setup_data(sample_targets=10)
+    # all_results_full = runner_full.run_all_experiments()
+    # logger.info(f"Full experiment results: {all_results_full}")
+
+    # Save final report (for the quick test)
     report_path = experiment_manager.save_experiment_report()
     logger.info(f"Detailed experiment report saved to: {report_path}")
     
     logger.info("Multi-target learning experiments completed!")
-    return experiment_ids
-
-
+    return independent_test_results_path # Return the path for the quick test results
 if __name__ == "__main__":
     results = main()

@@ -58,18 +58,19 @@ class MitsuiDataLoader:
         if missing_files:
             raise FileNotFoundError(
                 f"Missing required files in {self.data_dir}: {missing_files}"
-            )
-    
-    def load_train_data(self) -> pd.DataFrame:
-        """
-        Load training data.
-        
-        Returns:
-            Training data DataFrame
-        """
-        logger.info("Loading training data...")
-        
-        self.train_data = pd.read_csv(self.data_dir / 'train.csv')
+                def load_train_data(self, nrows: Optional[int] = None) -> pd.DataFrame:
+                    """
+                    Load training data.
+                    
+                    Args:
+                        nrows: Number of rows to read from the training data file.
+                    
+                    Returns:
+                        Training data DataFrame
+                    """
+                    logger.info(f"Loading training data (nrows={nrows})...")
+                    
+                    self.train_data = pd.read_csv(self.data_dir / 'train.csv', nrows=nrows)
         
         # Basic validation
         logger.info(f"Loaded training data: {self.train_data.shape}")
@@ -84,18 +85,19 @@ class MitsuiDataLoader:
         self.data_info['train_memory_mb'] = self.train_data.memory_usage(deep=True).sum() / 1024**2
         
         return self.train_data
-    
-    def load_train_labels(self) -> pd.DataFrame:
-        """
-        Load training labels.
-        
-        Returns:
-            Training labels DataFrame
-        """
-        logger.info("Loading training labels...")
-        
-        self.train_labels = pd.read_csv(self.data_dir / 'train_labels.csv')
-        
+        def load_train_labels(self, nrows: Optional[int] = None) -> pd.DataFrame:
+            """
+            Load training labels.
+            
+            Args:
+                nrows: Number of rows to read from the training labels file.
+            
+            Returns:
+                Training labels DataFrame
+            """
+            logger.info(f"Loading training labels (nrows={nrows})...")
+            
+            self.train_labels = pd.read_csv(self.data_dir / 'train_labels.csv', nrows=nrows)
         # Basic validation
         logger.info(f"Loaded training labels: {self.train_labels.shape}")
         
@@ -166,24 +168,25 @@ class MitsuiDataLoader:
                 logger.info(f"Loaded lag {lag} test labels: {self.lagged_test_labels[lag].shape}")
         
         return self.lagged_test_labels
-    
-    def load_all_data(self) -> Dict[str, pd.DataFrame]:
-        """
-        Load all competition data.
-        
-        Returns:
-            Dictionary containing all loaded data
-        """
-        logger.info("Loading all competition data...")
-        
-        data = {
-            'train': self.load_train_data(),
-            'train_labels': self.load_train_labels(),
-            'test': self.load_test_data(),
-            'target_pairs': self.load_target_pairs(),
-            'lagged_test_labels': self.load_lagged_test_labels()
-        }
-        
+        def load_all_data(self, nrows: Optional[int] = None) -> Dict[str, pd.DataFrame]:
+            """
+            Load all competition data.
+            
+            Args:
+                nrows: Number of rows to read for train and train_labels data.
+            
+            Returns:
+                Dictionary containing all loaded data
+            """
+            logger.info(f"Loading all competition data (nrows={nrows})...")
+            
+            data = {
+                'train': self.load_train_data(nrows=nrows),
+                'train_labels': self.load_train_labels(nrows=nrows),
+                'test': self.load_test_data(), # Test data is not limited by nrows for now
+                'target_pairs': self.load_target_pairs(),
+                'lagged_test_labels': self.load_lagged_test_labels()
+            }
         # Validate consistency
         self._validate_data_consistency()
         
