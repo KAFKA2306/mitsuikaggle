@@ -1,0 +1,6 @@
+artifact_location: /home/kafka/finance/mitsui-commodity-prediction-challenge/mlruns/529016514220499477
+creation_time: 1753532864381
+experiment_id: '529016514220499477'
+last_update_time: 1753532864381
+lifecycle_stage: active
+name: Mitsui_GPU_Demo

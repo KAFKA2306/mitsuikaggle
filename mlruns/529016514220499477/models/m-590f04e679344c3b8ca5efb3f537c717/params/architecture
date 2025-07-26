@@ -1,0 +1,1 @@
+{"input_dim": 10, "n_targets": 5, "hidden_dims": [64, 32], "model_type": "SimpleCompetitionModel"}

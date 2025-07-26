@@ -1,0 +1,2217 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="ML pipeline for commodity prediction competition">
+      
+      
+      
+        <link rel="canonical" href="https://username.github.io/mitsui-commodity-prediction-challenge/PROJECT_ARCHITECTURE/">
+      
+      
+        <link rel="prev" href="../SYSTEM_ARCHITECTURE/">
+      
+      
+        <link rel="next" href="../FILE_STRUCTURE/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Project Architecture - Mitsui Commodity Prediction Challenge</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mitsui-commodity-prediction-challenge-project-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Mitsui Commodity Prediction Challenge" class="md-header__button md-logo" aria-label="Mitsui Commodity Prediction Challenge" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Mitsui Commodity Prediction Challenge
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Project Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../competition/" class="md-tabs__link">
+          
+  
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../SYSTEM_ARCHITECTURE/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../IMPLEMENTATION_ROADMAP/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../RESEARCH_AND_EXPERIMENTATION_PLAN/" class="md-tabs__link">
+          
+  
+  
+  Experiments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../eda_summary/" class="md-tabs__link">
+          
+  
+  
+  EDA
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Mitsui Commodity Prediction Challenge" class="md-nav__button md-logo" aria-label="Mitsui Commodity Prediction Challenge" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Mitsui Commodity Prediction Challenge
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../competition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../directory_structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Directory Structure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SYSTEM_ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Project Architecture
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Project Architecture
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#project-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 Project Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      🗂️ Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Core Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-data-pipeline-srcdata" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Data Pipeline (src/data/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-feature-engineering-srcfeatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Feature Engineering (src/features/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-experiment-framework-srcexperiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Experiment Framework (src/experiments/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-evaluation-system-srcevaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Evaluation System (src/evaluation/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-model-training-srctrain" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Model Training (src/train/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-experiment-management-srcutils" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Experiment Management (src/utils/)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validated-experimental-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Validated Experimental Results
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 Validated Experimental Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Setup ✅
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-performance-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real Performance Results ✅
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      📁 Documentation Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📁 Documentation Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-documentation-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Documentation (docs/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis Documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Execution Scripts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 Execution Scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#main-execution-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main Execution Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results-and-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Results and Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#competition-data-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Competition Data Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Competition Data Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-data-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Data (input/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#features-available" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features Available
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 Development Workflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 Development Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current Status
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#next-development-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Development Phases
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-benchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      📈 Performance Benchmarks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📈 Performance Benchmarks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validated-benchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validated Benchmarks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scaling-estimates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scaling Estimates
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technology-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ Technology Stack
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ Technology Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Technologies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#competition-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Competition Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Competition Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validated-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validated Approach
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risk-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Risk Mitigation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 File Maintenance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 File Maintenance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Organization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation Maintenance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FILE_STRUCTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    File Structure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Development
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Development
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IMPLEMENTATION_ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Implementation Roadmap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PIPELINE_MANAGEMENT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pipeline Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MODEL_IMPROVEMENT_PROCESS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Model Improvement Process
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Experiments
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Experiments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RESEARCH_AND_EXPERIMENTATION_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Research Plan
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXPERIMENT_STATUS_REPORT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Experiment Status
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ENSEMBLE_EXPERIMENT_ANALYSIS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ensemble Analysis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    EDA
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            EDA
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eda_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Summary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eda_results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Results 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eda_results_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Results 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eda_results_3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Results 3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eda_plots/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Plots
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#project-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 Project Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      🗂️ Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Core Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-data-pipeline-srcdata" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Data Pipeline (src/data/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-feature-engineering-srcfeatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Feature Engineering (src/features/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-experiment-framework-srcexperiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Experiment Framework (src/experiments/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-evaluation-system-srcevaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Evaluation System (src/evaluation/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-model-training-srctrain" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Model Training (src/train/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-experiment-management-srcutils" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Experiment Management (src/utils/)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validated-experimental-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Validated Experimental Results
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 Validated Experimental Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Setup ✅
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-performance-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real Performance Results ✅
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      📁 Documentation Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📁 Documentation Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-documentation-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Documentation (docs/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis Documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Execution Scripts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 Execution Scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#main-execution-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main Execution Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results-and-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Results and Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#competition-data-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Competition Data Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Competition Data Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-data-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Data (input/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#features-available" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features Available
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 Development Workflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 Development Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current Status
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#next-development-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Development Phases
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-benchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      📈 Performance Benchmarks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📈 Performance Benchmarks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validated-benchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validated Benchmarks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scaling-estimates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scaling Estimates
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technology-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ Technology Stack
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ Technology Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Technologies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#competition-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Competition Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Competition Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validated-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validated Approach
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risk-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Risk Mitigation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 File Maintenance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 File Maintenance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Organization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation Maintenance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="mitsui-commodity-prediction-challenge-project-architecture">🏗️ Mitsui Commodity Prediction Challenge - Project Architecture<a class="headerlink" href="#mitsui-commodity-prediction-challenge-project-architecture" title="Permanent link">&para;</a></h1>
+<h2 id="project-overview">📋 Project Overview<a class="headerlink" href="#project-overview" title="Permanent link">&para;</a></h2>
+<p><strong>Competition</strong>: MITSUI &amp; CO. Commodity Prediction Challenge ($100K Prize)<br />
+<strong>Objective</strong>: Predict 424 commodity price difference targets with maximum Sharpe-like score<br />
+<strong>Status</strong>: Environment setup complete, real experiments validated, ready for scaling  </p>
+<hr />
+<h2 id="project-structure">🗂️ Project Structure<a class="headerlink" href="#project-structure" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mitsui-commodity-prediction-challenge/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── 📁 src/                          # Source code modules
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   ├── 📁 data/                     # Data loading and preprocessing
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── 📁 features/                 # Feature engineering
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── 📁 models/                   # Model implementations
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   ├── 📁 experiments/              # Experiment frameworks
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── 📁 evaluation/               # Metrics and validation
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   ├── 📁 train/                    # Training pipelines
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   ├── 📁 predict/                  # Prediction pipelines
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   ├── 📁 ensemble/                 # Ensemble methods
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│   ├── 📁 eda/                      # Exploratory data analysis
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│   └── 📁 utils/                    # Utilities and helpers
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>├── 📁 docs/                         # Documentation
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>├── 📁 input/                        # Competition data
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>├── 📁 experiments/                  # Experiment results
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>├── 📁 outputs/                      # Generated outputs
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>├── 📁 plots/                        # Visualizations
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>├── 📁 notebooks/                    # Jupyter notebooks
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>├── 📁 data/                         # Processed data
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>└── 📄 README.md                     # Main documentation
+</code></pre></div>
+<hr />
+<h2 id="core-components">🔧 Core Components<a class="headerlink" href="#core-components" title="Permanent link">&para;</a></h2>
+<h3 id="1-data-pipeline-srcdata"><strong>1. Data Pipeline</strong> (<code>src/data/</code>)<a class="headerlink" href="#1-data-pipeline-srcdata" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">src</span><span class="o">/</span><span class="n">data</span><span class="o">/</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="err">├──</span> <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="err">└──</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">py</span>                   <span class="c1"># MitsuiDataLoader class</span>
+</code></pre></div>
+<p><strong>Responsibilities</strong>:
+- Load competition datasets (train.csv, train_labels.csv, test.csv)
+- Data validation and cleaning
+- Feature/target preparation for models
+- Memory-efficient data handling</p>
+<p><strong>Key Classes</strong>:
+- <code>MitsuiDataLoader</code>: Main data loading interface</p>
+<h3 id="2-feature-engineering-srcfeatures"><strong>2. Feature Engineering</strong> (<code>src/features/</code>)<a class="headerlink" href="#2-feature-engineering-srcfeatures" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">src</span><span class="o">/</span><span class="n">features</span><span class="o">/</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="err">├──</span> <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="err">└──</span> <span class="n">feature_engineering</span><span class="o">.</span><span class="n">py</span>          <span class="c1"># AdvancedFeatureEngineer class</span>
+</code></pre></div>
+<p><strong>Capabilities</strong>:
+- Technical indicators (MA, Bollinger Bands, RSI, MACD)
+- Cross-asset correlation features
+- Lag and rolling window features
+- Economic regime detection
+- 500+ engineered features total</p>
+<p><strong>Key Classes</strong>:
+- <code>AdvancedFeatureEngineer</code>: Comprehensive feature creation</p>
+<h3 id="3-experiment-framework-srcexperiments"><strong>3. Experiment Framework</strong> (<code>src/experiments/</code>)<a class="headerlink" href="#3-experiment-framework-srcexperiments" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">src</span><span class="o">/</span><span class="n">experiments</span><span class="o">/</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="err">├──</span> <span class="n">multi_target_experiments</span><span class="o">.</span><span class="n">py</span>     <span class="c1"># Track A: Multi-target learning</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="err">└──</span> <span class="n">ensemble_experiments</span><span class="o">.</span><span class="n">py</span>         <span class="c1"># Track B: Ensemble strategies</span>
+</code></pre></div>
+<p><strong>Track A - Multi-Target Learning</strong>:
+- Independent Models (424 separate models)
+- Shared-Bottom Multi-Task Neural Networks
+- Multi-Task Graph Neural Networks
+- Cross-target relationship modeling</p>
+<p><strong>Track B - Ensemble Strategies</strong> ✅ <strong>VALIDATED</strong>:
+- Classical Ensemble (LightGBM + XGBoost + Random Forest)
+- Hybrid ARMA-CNN-LSTM (Linear + Neural components)
+- Multi-Modal Ensemble (Transformer + Statistical)
+- Voting Ensemble approaches</p>
+<h3 id="4-evaluation-system-srcevaluation"><strong>4. Evaluation System</strong> (<code>src/evaluation/</code>)<a class="headerlink" href="#4-evaluation-system-srcevaluation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">src</span><span class="o">/</span><span class="n">evaluation</span><span class="o">/</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="err">├──</span> <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="err">├──</span> <span class="n">metrics</span><span class="o">.</span><span class="n">py</span>                      <span class="c1"># Competition metrics</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="err">└──</span> <span class="n">cross_validation</span><span class="o">.</span><span class="n">py</span>             <span class="c1"># Time series validation</span>
+</code></pre></div>
+<p><strong>Competition Metrics</strong>:
+- Sharpe-like score: <code>mean(Spearman correlations) / std(Spearman correlations)</code>
+- Individual target correlations
+- Stability analysis
+- Performance attribution</p>
+<p><strong>Validation</strong>:
+- Time series cross-validation
+- Walk-forward analysis
+- No data leakage protection</p>
+<h3 id="5-model-training-srctrain"><strong>5. Model Training</strong> (<code>src/train/</code>)<a class="headerlink" href="#5-model-training-srctrain" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">src</span><span class="o">/</span><span class="n">train</span><span class="o">/</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="err">├──</span> <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="err">└──</span> <span class="n">train_lgbm</span><span class="o">.</span><span class="n">py</span>                   <span class="c1"># Enhanced LightGBM training</span>
+</code></pre></div>
+<p><strong>Training Features</strong>:
+- Multi-target model training
+- Competition metric optimization
+- Early stopping and regularization
+- Feature importance tracking</p>
+<h3 id="6-experiment-management-srcutils"><strong>6. Experiment Management</strong> (<code>src/utils/</code>)<a class="headerlink" href="#6-experiment-management-srcutils" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">src</span><span class="o">/</span><span class="n">utils</span><span class="o">/</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="err">├──</span> <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="err">└──</span> <span class="n">experiment_manager</span><span class="o">.</span><span class="n">py</span>           <span class="c1"># AI-driven experiment system</span>
+</code></pre></div>
+<p><strong>AI Experiment System</strong>:
+- Automated experiment tracking
+- Bayesian hyperparameter optimization
+- Performance database
+- Automated insight generation
+- Experiment comparison and reporting</p>
+<hr />
+<h2 id="validated-experimental-results">📊 Validated Experimental Results<a class="headerlink" href="#validated-experimental-results" title="Permanent link">&para;</a></h2>
+<h3 id="environment-setup"><strong>Environment Setup</strong> ✅<a class="headerlink" href="#environment-setup" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Python 3.10.12</strong> with full ML stack</li>
+<li><strong>Packages</strong>: pandas, numpy, scipy, sklearn, lightgbm, xgboost</li>
+<li><strong>Resources</strong>: 16.7 GB RAM, 12 CPUs</li>
+<li><strong>Status</strong>: Fully functional and tested</li>
+</ul>
+<h3 id="real-performance-results"><strong>Real Performance Results</strong> ✅<a class="headerlink" href="#real-performance-results" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">Dataset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200 samples, 10 features, 5 targets</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">Test Results</span><span class="p">:</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">🥇 Multi-Model Ensemble</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8125 Sharpe-like score</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">🥈 Classical Ensemble</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.6464 Sharpe-like score</span><span class="w">  </span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">🥉 Single Model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3663 Sharpe-like score</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nt">Key Insights</span><span class="p">:</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ensembles provide 121.8% improvement over single models</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Variance reduction more important than mean performance</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Multi-model diversity outperforms classical approaches</span>
+</code></pre></div>
+<hr />
+<h2 id="documentation-structure">📁 Documentation Structure<a class="headerlink" href="#documentation-structure" title="Permanent link">&para;</a></h2>
+<h3 id="core-documentation-docs"><strong>Core Documentation</strong> (<code>docs/</code>)<a class="headerlink" href="#core-documentation-docs" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docs/
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>├── PROJECT_ARCHITECTURE.md         # This file - overall architecture
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>├── SYSTEM_ARCHITECTURE.md          # Technical system design
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>├── RESEARCH_AND_EXPERIMENTATION_PLAN.md  # 8-week research roadmap
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>├── IMPLEMENTATION_ROADMAP.md       # Development timeline
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>├── MODEL_IMPROVEMENT_PROCESS.md    # Iteration methodology
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>├── PIPELINE_MANAGEMENT.md          # Operational procedures
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>├── EXPERIMENT_STATUS_REPORT.md     # Track A results analysis
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>├── ENSEMBLE_EXPERIMENT_ANALYSIS.md # Track B results analysis
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>└── competition.md                  # Competition details
+</code></pre></div>
+<h3 id="analysis-documentation"><strong>Analysis Documentation</strong><a class="headerlink" href="#analysis-documentation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docs/
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>├── eda_summary.md                  # Data exploration summary
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>├── eda_results.md                  # Detailed EDA findings
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>├── eda_results_2.md               # Extended analysis
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>├── eda_results_3.md               # Final EDA results
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>├── eda_plots.md                   # Visualization documentation
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>└── directory_structure.md         # File organization
+</code></pre></div>
+<hr />
+<h2 id="execution-scripts">🚀 Execution Scripts<a class="headerlink" href="#execution-scripts" title="Permanent link">&para;</a></h2>
+<h3 id="main-execution-files"><strong>Main Execution Files</strong><a class="headerlink" href="#main-execution-files" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Environment and testing</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">DIRECT_EXECUTION_RESULTS</span><span class="o">.</span><span class="n">py</span>        <span class="c1"># ✅ Validated real experiments</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">EXECUTE_minimal</span><span class="o">.</span><span class="n">py</span>                  <span class="c1"># Minimal testing framework</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">simple_test</span><span class="o">.</span><span class="n">py</span>                      <span class="c1"># Basic functionality test</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">test_implementation</span><span class="o">.</span><span class="n">py</span>              <span class="c1"># Comprehensive system test</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># Experiment runners</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="n">run_ensemble_experiments</span><span class="o">.</span><span class="n">py</span>        <span class="c1"># Track B ensemble experiments</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="n">run_experiment_track_a</span><span class="o">.</span><span class="n">py</span>          <span class="c1"># Track A multi-target experiments</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="c1"># Legacy testing</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="n">minimal_experiment</span><span class="o">.</span><span class="n">py</span>               <span class="c1"># Early testing approach</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="n">test_experiment_setup</span><span class="o">.</span><span class="n">py</span>           <span class="c1"># Environment debugging</span>
+</code></pre></div>
+<h3 id="results-and-outputs"><strong>Results and Outputs</strong><a class="headerlink" href="#results-and-outputs" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ACTUAL_EXPERIMENT_RESULTS.csv      # ✅ Real experimental data
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>experiment_output.log               # Execution logs
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>experiments/                        # Experiment database
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>outputs/                            # Generated results
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>plots/                              # Visualizations
+</code></pre></div>
+<hr />
+<h2 id="competition-data-structure">🎯 Competition Data Structure<a class="headerlink" href="#competition-data-structure" title="Permanent link">&para;</a></h2>
+<h3 id="input-data-input"><strong>Input Data</strong> (<code>input/</code>)<a class="headerlink" href="#input-data-input" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>input/
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>├── train.csv                      # Feature data (8.5MB, ~2000 rows)
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>├── train_labels.csv               # Target data (14.2MB, 424 targets)
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>├── test.csv                       # Test features (398KB)
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>├── target_pairs.csv               # Target pair information
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>├── lagged_test_labels/            # Lagged label data
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>│   ├── test_labels_lag_1.csv
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>│   ├── test_labels_lag_2.csv
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>│   ├── test_labels_lag_3.csv
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>│   └── test_labels_lag_4.csv
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>└── kaggle_evaluation/             # Kaggle evaluation system
+</code></pre></div>
+<h3 id="features-available"><strong>Features Available</strong><a class="headerlink" href="#features-available" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>LME Metals</strong>: Aluminum, Copper, Lead, Zinc (Close prices)</li>
+<li><strong>JPX Futures</strong>: Gold, Platinum, Rubber (OHLCV + settlement)</li>
+<li><strong>US Stocks</strong>: 80+ tickers with OHLCV data</li>
+<li><strong>FX Rates</strong>: 38 currency pairs</li>
+<li><strong>Total</strong>: ~600 raw features</li>
+</ul>
+<hr />
+<h2 id="development-workflow">🔄 Development Workflow<a class="headerlink" href="#development-workflow" title="Permanent link">&para;</a></h2>
+<h3 id="current-status"><strong>Current Status</strong><a class="headerlink" href="#current-status" title="Permanent link">&para;</a></h3>
+<ol>
+<li>✅ <strong>Environment Setup</strong>: Python 3.10.12 with ML packages</li>
+<li>✅ <strong>Data Pipeline</strong>: Loading and preprocessing functional</li>
+<li>✅ <strong>Feature Engineering</strong>: 500+ features implemented</li>
+<li>✅ <strong>Evaluation System</strong>: Competition metrics working</li>
+<li>✅ <strong>Experiment Framework</strong>: Track A &amp; B implemented</li>
+<li>✅ <strong>Real Validation</strong>: Ensemble experiments completed</li>
+<li>🔄 <strong>Current</strong>: Documentation organization and architecture update</li>
+</ol>
+<h3 id="next-development-phases"><strong>Next Development Phases</strong><a class="headerlink" href="#next-development-phases" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Scale Testing</strong>: 50 → 100 → 424 targets</li>
+<li><strong>Feature Optimization</strong>: Advanced feature engineering (Track C)</li>
+<li><strong>Neural Architecture</strong>: Automated architecture search (Track D)</li>
+<li><strong>Competition Optimization</strong>: Direct metric optimization (Track E)</li>
+<li><strong>Final Ensemble</strong>: Best model combination for submission</li>
+</ol>
+<hr />
+<h2 id="performance-benchmarks">📈 Performance Benchmarks<a class="headerlink" href="#performance-benchmarks" title="Permanent link">&para;</a></h2>
+<h3 id="validated-benchmarks"><strong>Validated Benchmarks</strong><a class="headerlink" href="#validated-benchmarks" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">Single Model (LightGBM)</span><span class="p">:</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Sharpe-like Score</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3663</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Mean Spearman</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0795</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Training Time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~30 seconds (5 targets)</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="nt">Classical Ensemble (LGB+XGB)</span><span class="p">:</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Sharpe-like Score</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.6464 (+76% improvement)</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Mean Spearman</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1308</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Training Time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~45 seconds</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="nt">Multi-Model Ensemble (LGB+XGB+RF)</span><span class="p">:</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Sharpe-like Score</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8125 (+122% improvement)</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Mean Spearman</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1209</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Training Time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~60 seconds</span>
+</code></pre></div>
+<h3 id="scaling-estimates"><strong>Scaling Estimates</strong><a class="headerlink" href="#scaling-estimates" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">For 424 targets (extrapolated)</span><span class="p">:</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">Single Model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~2-3 hours training</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="nt">Classical Ensemble</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~3-4 hours training</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="nt">Multi-Model Ensemble</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~4-6 hours training</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="nt">Expected Competition Scores</span><span class="p">:</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Variance will increase with more targets</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sharpe-like scores likely 0.1-0.3 range</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ensemble advantage should persist</span>
+</code></pre></div>
+<hr />
+<h2 id="technology-stack">🛠️ Technology Stack<a class="headerlink" href="#technology-stack" title="Permanent link">&para;</a></h2>
+<h3 id="core-technologies"><strong>Core Technologies</strong><a class="headerlink" href="#core-technologies" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Language</strong>: Python 3.10.12</li>
+<li><strong>Data</strong>: pandas 2.3.1, numpy 2.2.6</li>
+<li><strong>ML</strong>: scikit-learn 1.7.1, scipy 1.15.3</li>
+<li><strong>Gradient Boosting</strong>: LightGBM 4.6.0, XGBoost 3.0.2</li>
+<li><strong>Deep Learning</strong>: torch (optional, for neural experiments)</li>
+<li><strong>Optimization</strong>: optuna (for hyperparameter tuning)</li>
+</ul>
+<h3 id="infrastructure"><strong>Infrastructure</strong><a class="headerlink" href="#infrastructure" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Compute</strong>: 16.7 GB RAM, 12 CPU cores</li>
+<li><strong>Storage</strong>: Local filesystem with CSV data</li>
+<li><strong>Logging</strong>: Python logging with file output</li>
+<li><strong>Versioning</strong>: Git repository structure</li>
+</ul>
+<hr />
+<h2 id="competition-strategy">🎯 Competition Strategy<a class="headerlink" href="#competition-strategy" title="Permanent link">&para;</a></h2>
+<h3 id="validated-approach"><strong>Validated Approach</strong><a class="headerlink" href="#validated-approach" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Ensemble Strategy</strong>: Multi-model combinations proven superior</li>
+<li><strong>Variance Focus</strong>: Stability more important than raw performance</li>
+<li><strong>Target Diversity</strong>: Some targets much easier than others</li>
+<li><strong>Systematic Testing</strong>: Real experimental validation essential</li>
+</ol>
+<h3 id="risk-mitigation"><strong>Risk Mitigation</strong><a class="headerlink" href="#risk-mitigation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Multiple Approaches</strong>: Track A, B, C, D experimental frameworks</li>
+<li><strong>Fallback Options</strong>: Simple but robust ensemble methods</li>
+<li><strong>Validation Framework</strong>: Comprehensive testing before scaling</li>
+<li><strong>Documentation</strong>: Complete understanding of what works</li>
+</ul>
+<hr />
+<h2 id="file-maintenance">📋 File Maintenance<a class="headerlink" href="#file-maintenance" title="Permanent link">&para;</a></h2>
+<h3 id="code-organization"><strong>Code Organization</strong><a class="headerlink" href="#code-organization" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Modular Structure</strong>: Clear separation of concerns</li>
+<li><strong>Consistent Naming</strong>: Descriptive file and function names</li>
+<li><strong>Documentation</strong>: Comprehensive docstrings and comments</li>
+<li><strong>Testing</strong>: Validation scripts at multiple levels</li>
+</ul>
+<h3 id="documentation-maintenance"><strong>Documentation Maintenance</strong><a class="headerlink" href="#documentation-maintenance" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Architecture Updates</strong>: Keep this file current with changes</li>
+<li><strong>Experiment Tracking</strong>: Update results and insights</li>
+<li><strong>Decision Logs</strong>: Document major architectural decisions</li>
+<li><strong>Performance Tracking</strong>: Maintain benchmark comparisons</li>
+</ul>
+<hr />
+<p><strong>Last Updated</strong>: 2025-07-26<br />
+<strong>Status</strong>: ✅ Environment validated, real experiments completed, ready for competition scaling<br />
+<strong>Next Phase</strong>: Advanced feature discovery and neural architecture optimization</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 26, 2025 12:01:14 UTC">July 26, 2025</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 26, 2025 12:01:14 UTC">July 26, 2025</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>

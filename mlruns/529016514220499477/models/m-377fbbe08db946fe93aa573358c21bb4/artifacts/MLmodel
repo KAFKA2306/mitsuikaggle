@@ -1,0 +1,23 @@
+artifact_path: /home/kafka/finance/mitsui-commodity-prediction-challenge/mlruns/529016514220499477/models/m-377fbbe08db946fe93aa573358c21bb4/artifacts
+flavors:
+  python_function:
+    config:
+      device: null
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pytorch
+    pickle_module_name: mlflow.pytorch.pickle_module
+    python_version: 3.10.12
+  pytorch:
+    code: null
+    model_data: data
+    pytorch_version: 2.2.0+cu121
+mlflow_version: 3.1.4
+model_id: m-377fbbe08db946fe93aa573358c21bb4
+model_size_bytes: 196727
+model_uuid: m-377fbbe08db946fe93aa573358c21bb4
+prompts: null
+run_id: a114edcfeecd4ffb806a53bb81bd3132
+utc_time_created: '2025-07-26 12:27:56.924097'

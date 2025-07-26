@@ -1,0 +1,10 @@
+artifact_location: /home/kafka/finance/mitsui-commodity-prediction-challenge/mlruns/529016514220499477/models/m-4a5ee89212a0498ba6fe79833d3efc94/artifacts
+creation_timestamp: 1753532871784
+experiment_id: '529016514220499477'
+last_updated_timestamp: 1753532874285
+model_id: m-4a5ee89212a0498ba6fe79833d3efc94
+model_type: null
+name: model_Medium_Model_01
+source_run_id: 292b815e1e264d4f8debcd349391e1eb
+status: 2
+status_message: null

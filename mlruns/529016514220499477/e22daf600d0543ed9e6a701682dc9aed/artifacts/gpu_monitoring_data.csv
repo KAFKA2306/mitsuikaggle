@@ -1,0 +1,2 @@
+timestamp,gpu_memory_used_gb,gpu_memory_cached_gb,gpu_memory_total_gb,gpu_utilization_percent,cpu_percent,system_memory_percent,system_memory_used_gb
+2025-07-26T21:27:45.074400,0.0,0.0,11.99951171875,0.0,0.0,25.5,3.7290687561035156

@@ -1,0 +1,14 @@
+artifact_uri: /home/kafka/finance/mitsui-commodity-prediction-challenge/mlruns/529016514220499477/a114edcfeecd4ffb806a53bb81bd3132/artifacts
+end_time: 1753532881413
+entry_point_name: ''
+experiment_id: '529016514220499477'
+lifecycle_stage: active
+run_id: a114edcfeecd4ffb806a53bb81bd3132
+run_name: Large_Model_001
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753532876370
+status: 3
+tags: []
+user_id: root

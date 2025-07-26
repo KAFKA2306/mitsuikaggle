@@ -1,0 +1,10 @@
+name,type,parameters
+network.0,Linear,704
+network.1,BatchNorm1d,128
+network.2,ReLU,0
+network.3,Dropout,0
+network.4,Linear,2080
+network.5,BatchNorm1d,64
+network.6,ReLU,0
+network.7,Dropout,0
+network.8,Linear,165
