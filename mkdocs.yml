@@ -1,6 +1,6 @@
 site_name: Mitsui Commodity Prediction Challenge
 site_description: ML pipeline for commodity prediction competition
-site_url: https://username.github.io/mitsui-commodity-prediction-challenge
+site_url: https://kafka2306.github.io/mitsuikaggle/
 
 theme:
   name: material
