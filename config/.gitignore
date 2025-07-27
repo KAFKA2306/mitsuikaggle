@@ -106,3 +106,4 @@ coverage.xml
 .pytest_cache/
 
 .env/kaggle.json
+kaggle.json

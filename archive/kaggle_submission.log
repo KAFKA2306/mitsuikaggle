@@ -1,0 +1,50 @@
+2025-07-27 08:35:21,958 - INFO - 🚀 Starting Kaggle submission workflow...
+2025-07-27 08:35:21,958 - INFO - ============================================================
+2025-07-27 08:35:21,958 - INFO - 🔍 Validating environment...
+2025-07-27 08:35:22,153 - INFO - ✅ Kaggle CLI version: Kaggle API 1.7.4.5
+2025-07-27 08:35:22,154 - INFO - ✅ Kaggle credentials found for user: takazawamasato
+2025-07-27 08:35:22,154 - INFO - 🔍 Validating submission file...
+2025-07-27 08:35:22,166 - INFO - 📊 File shape: (90, 425)
+2025-07-27 08:35:22,168 - INFO - 📈 Value range: -4.4155 to 4.9131
+2025-07-27 08:35:22,168 - INFO - 📈 Total predictions: 38160
+2025-07-27 08:35:22,168 - INFO - ✅ Submission file validation passed
+2025-07-27 08:35:22,169 - INFO - 🔍 Checking competition status...
+2025-07-27 08:35:22,900 - INFO - ✅ Competition found and accessible
+2025-07-27 08:35:23,375 - INFO - ✅ Leaderboard active with 21 entries
+2025-07-27 08:35:23,376 - INFO - 🚀 Starting submission process...
+2025-07-27 08:35:23,376 - INFO - 🎯 Attempt 1: Standard submission
+2025-07-27 08:35:26,077 - WARNING - ⚠️ Attempt 1 failed:
+2025-07-27 08:35:26,077 - WARNING - 📝 stdout: 400 Client Error: Bad Request for url: https://www.kaggle.com/api/v1/competitions/submissions/submit/mitsui-commodity-prediction-challenge
+
+2025-07-27 08:35:26,077 - WARNING - 📝 stderr: 
+  0%|          | 0.00/732k [00:00<?, ?B/s]
+ 19%|█▊        | 136k/732k [00:00<00:00, 1.34MB/s]
+ 68%|██████▊   | 496k/732k [00:00<00:00, 891kB/s] 
+ 84%|████████▍ | 616k/732k [00:00<00:00, 724kB/s]
+100%|██████████| 732k/732k [00:01<00:00, 388kB/s]
+
+2025-07-27 08:35:26,077 - INFO - ⏳ Waiting 30 seconds before next attempt...
+2025-07-27 08:35:56,115 - INFO - 🎯 Attempt 2: Short message submission
+2025-07-27 08:35:58,944 - WARNING - ⚠️ Attempt 2 failed:
+2025-07-27 08:35:58,944 - WARNING - 📝 stdout: 400 Client Error: Bad Request for url: https://www.kaggle.com/api/v1/competitions/submissions/submit/mitsui-commodity-prediction-challenge
+
+2025-07-27 08:35:58,944 - WARNING - 📝 stderr: 
+  0%|          | 0.00/732k [00:00<?, ?B/s]
+ 20%|█▉        | 144k/732k [00:00<00:00, 1.38MB/s]
+ 68%|██████▊   | 496k/732k [00:00<00:00, 1.02MB/s]
+ 84%|████████▍ | 616k/732k [00:00<00:00, 784kB/s] 
+100%|██████████| 732k/732k [00:01<00:00, 384kB/s]
+
+2025-07-27 08:35:58,944 - INFO - ⏳ Waiting 30 seconds before next attempt...
+2025-07-27 08:36:28,974 - INFO - 🎯 Attempt 3: Alternative syntax
+2025-07-27 08:36:31,236 - WARNING - ⚠️ Attempt 3 failed:
+2025-07-27 08:36:31,236 - WARNING - 📝 stdout: 400 Client Error: Bad Request for url: https://www.kaggle.com/api/v1/competitions/submissions/submit/mitsui-commodity-prediction-challenge
+
+2025-07-27 08:36:31,236 - WARNING - 📝 stderr: 
+  0%|          | 0.00/732k [00:00<?, ?B/s]
+ 19%|█▊        | 136k/732k [00:00<00:00, 1.29MB/s]
+ 84%|████████▍ | 616k/732k [00:00<00:00, 1.29MB/s]
+100%|██████████| 732k/732k [00:01<00:00, 533kB/s] 
+
+2025-07-27 08:36:31,236 - ERROR - 💥 All submission attempts failed
+2025-07-27 08:36:31,236 - ERROR - 💥 Submission failed
