@@ -1,5 +1,7 @@
 # MITSUI & CO. Commodity Prediction Challenge - 実証システム
 
+[![Deploy MkDocs Simple](https://github.com/KAFKA2306/mitsuikaggle/actions/workflows/docs-simple.yml/badge.svg)](https://github.com/KAFKA2306/mitsuikaggle/actions/workflows/docs-simple.yml)
+
 [![Documentation](https://img.shields.io/badge/docs-MkDocs-blue)](https://kafka2306.github.io/mitsuikaggle/)
 [![Competition](https://img.shields.io/badge/Kaggle-Competition-orange)](https://www.kaggle.com/competitions/mitsui-commodity-prediction-challenge)
 [![Status](https://img.shields.io/badge/Status-121.8%25%20Improvement-green)](ACTUAL_EXPERIMENT_RESULTS.csv)
