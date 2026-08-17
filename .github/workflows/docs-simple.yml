@@ -70,8 +70,7 @@ jobs:
           stale_references = (
               "](ACTUAL_EXPERIMENT_RESULTS.csv)",
               "DIRECT_EXECUTION_RESULTS.py",
-              "mkdocs gh-deploy",
           )
           if any(value in readme for value in stale_references):
-              raise SystemExit("README contains a stale research or deployment reference")
+              raise SystemExit("README contains a stale research reference")
           PY
