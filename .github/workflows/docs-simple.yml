@@ -1,27 +1,76 @@
-name: Deploy MkDocs Simple
+name: Research artifact checks
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - README.md
+      - results/experiments/**
+      - .github/workflows/docs-simple.yml
   push:
-    branches: [ main ]
+    branches: [main]
+    paths:
+      - README.md
+      - results/experiments/**
+      - .github/workflows/docs-simple.yml
+
+permissions:
+  contents: read
 
 jobs:
-  deploy:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          
-      - name: Install MkDocs
+
+      - name: Verify stored experiment artifacts
         run: |
-          pip install mkdocs mkdocs-material mkdocs-git-revision-date-localized-plugin
-          
-      - name: Build and Deploy
-        run: |
-          mkdocs gh-deploy --force
+          python - <<'PY'
+          import csv
+          import json
+          import math
+          from pathlib import Path
+
+          csv_path = Path("results/experiments/ACTUAL_EXPERIMENT_RESULTS.csv")
+          json_path = Path("results/experiments/production_424_results.json")
+          readme = Path("README.md").read_text(encoding="utf-8")
+
+          with csv_path.open(newline="", encoding="utf-8") as handle:
+              rows = list(csv.DictReader(handle))
+          required_columns = {"methods", "mean_spearman", "std_spearman", "sharpe_like_score"}
+          if not rows or set(rows[0]) != required_columns:
+              raise SystemExit("unexpected experiment CSV schema")
+          for row in rows:
+              for field in ("mean_spearman", "std_spearman", "sharpe_like_score"):
+                  if not math.isfinite(float(row[field])):
+                      raise SystemExit(f"non-finite {field} in {row['methods']}")
+
+          production = json.loads(json_path.read_text(encoding="utf-8"))
+          required_keys = {
+              "experiment",
+              "samples",
+              "features",
+              "targets",
+              "best_sharpe_score",
+              "final_sharpe_score",
+              "final_mean_correlation",
+              "final_std_correlation",
+              "total_time_minutes",
+              "device",
+          }
+          if set(production) != required_keys:
+              raise SystemExit("unexpected 424-target artifact schema")
+          if min(production["samples"], production["features"], production["targets"]) <= 0:
+              raise SystemExit("non-positive experiment dimensions")
+
+          for referenced in (csv_path, json_path):
+              if str(referenced) not in readme:
+                  raise SystemExit(f"README does not link {referenced}")
+
+          stale_references = (
+              "](ACTUAL_EXPERIMENT_RESULTS.csv)",
+              "DIRECT_EXECUTION_RESULTS.py",
+          )
+          if any(value in readme for value in stale_references):
+              raise SystemExit("README contains a stale research reference")
+          PY
