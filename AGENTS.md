@@ -16,8 +16,22 @@ Own commodity time-series prediction research for this repository. Produce repro
 2. Continue one canonical research workline before adding another model, dataset, branch or Issue.
 3. Prefer completion of a reproducible held-out experiment, leakage/baseline correction, robustness/falsification, or removal of superseded experiment code.
 4. Predeclare split, metric and benchmark before interpreting new model results.
-5. Bind evidence to exact code/data revisions and run the smallest relevant deterministic/evaluation checks.
+5. Bind evidence to exact code/data revisions and run the smallest relevant deterministic/evaluation checks before merge.
 6. Stop at the fixed point; do not run broad model/hyperparameter sweeps without a bounded research question.
+
+## Merge and release are separate
+
+### PR merge conditions
+
+A PR may merge when the repository-local research contract is correct on the exact head revision: frozen data/split/benchmark definitions are fixed, deterministic/evaluation checks pass, result artifacts are reproducible where affected, and no unresolved review or correctness blocker remains.
+
+A future competition score, live market observation, production inference, public deployment, or realized trading result is **not** a merge condition unless the PR specifically changes the release mechanism and pre-merge validation belongs to that bounded change.
+
+### Research/model release conditions
+
+Release is a separate post-merge decision. Treat a commodity prediction result/model as released only after the merged `main` revision is read back and the release artifact/surface in scope is actually verified, including exact dataset/model revision, persisted held-out evaluation artifact, published model/API/UI when applicable, deployment identity, and rollback/rebuild path.
+
+A merged PR does not prove live predictive or trading performance. A release/data/runtime blocker may block release without invalidating a correctly merged repository change. Report merge and release independently.
 
 ## Boundaries
 
@@ -28,4 +42,4 @@ Own commodity time-series prediction research for this repository. Produce repro
 
 ## Completion report
 
-Report empirical result Before -> After, exact dataset/split/model/benchmark evidence, Issue/PR/commit/check artifact when applicable, complexity removed, and the remaining blocker.
+Report empirical result Before -> After, exact dataset/split/model/benchmark evidence, Issue/PR/commit/check artifact, then report `merged` and `released` separately with direct evidence for each. Include complexity removed and the remaining blocker.
