@@ -1,0 +1,80 @@
+{
+  "schema": "mitsuikaggle.experiment-provenance.v1",
+  "experiment_id": "production-424-targets",
+  "status": "historical_result_not_competition_equivalent",
+  "claim_scope": "local 424-target chronological holdout experiment; not Kaggle leaderboard or official evaluation-API evidence",
+  "producer": {
+    "path": "scripts/final_424_production.py",
+    "git_blob_sha": "7fbde6a3731418e73283ed1a3c4b82d564796e07"
+  },
+  "inputs": [
+    {
+      "path": "input/train.csv",
+      "git_blob_sha": "70c3f303d92c99016fb8d3c47adb6d3483ee18a6"
+    },
+    {
+      "path": "input/train_labels.csv",
+      "git_blob_sha": "a13e620c49e71816d4be4482753a54aa2e31bb84"
+    }
+  ],
+  "selection": {
+    "samples_reported": 1917,
+    "feature_count_reported": 557,
+    "target_count_reported": 424,
+    "feature_rule": "all train.csv columns except date_id",
+    "target_rule": "all train_labels.csv columns whose names start with target_"
+  },
+  "split": {
+    "kind": "chronological_holdout_by_merged_row_order",
+    "train_fraction": 0.8,
+    "shuffle": false,
+    "holdout_reused_during_training": true,
+    "holdout_usage": "evaluated every 5 epochs for best-checkpoint selection and early stopping, then reused for final reported score"
+  },
+  "randomness": {
+    "seed_bound_in_script": false,
+    "reproducibility_implication": "PyTorch parameter initialization, dropout, and other stochastic behavior are not pinned by the producer script."
+  },
+  "metric": {
+    "local_name": "sharpe_score_manual",
+    "local_definition": "mean Pearson correlation across retained target-level correlations divided by their population standard deviation",
+    "perfect_correlation_filter": "target correlations with absolute value >= 1.0 are excluded",
+    "competition_definition": "mean Spearman rank correlation between predictions and targets divided by the standard deviation",
+    "competition_relation": "not metric-equivalent: local implementation uses Pearson rather than Spearman and is not run through the official evaluation API",
+    "official_competition_url": "https://www.kaggle.com/competitions/mitsui-commodity-prediction-challenge"
+  },
+  "persisted_result": {
+    "path": "results/experiments/production_424_results.json",
+    "git_blob_sha": "14b4cc241125235321555211d0b95ef6fa09b1c9",
+    "best_sharpe_score": 1.1911680408317646,
+    "final_sharpe_score": 1.1911680408317646,
+    "final_mean_correlation": 0.058018779359941784,
+    "final_std_correlation": 0.048707468107882276,
+    "total_time_minutes": 15.128787553310394,
+    "device": "cuda"
+  },
+  "verified_connections": [
+    "The persisted result shape matches the producer contract: 1917 merged samples, 557 input features, and 424 targets.",
+    "The producer uses an 80/20 chronological split without shuffling.",
+    "The producer evaluates the holdout repeatedly during training, selects the best checkpoint using that same holdout, and reports the final score on it again.",
+    "The producer's local score uses Pearson correlation, whereas the official competition metric uses Spearman rank correlation.",
+    "The producer does not set a random seed.",
+    "The producer writes production_424_results.json in its working directory, while the persisted artifact is stored under results/experiments/."
+  ],
+  "research_conclusion": {
+    "usable_claim": "The repository contains evidence of a historical local 424-target GPU experiment with the persisted descriptive statistics above.",
+    "blocked_claims": [
+      "The score 1.1911680408317646 is not a competition-equivalent validation score.",
+      "The result is not untouched out-of-sample evidence because the holdout participates in checkpoint selection and early stopping.",
+      "The historical run is not exactly reproducible from the producer alone because stochastic seeds and historical package/runtime versions are not bound.",
+      "No Kaggle submission ID or public/private leaderboard score is linked to this artifact."
+    ]
+  },
+  "unverified_or_missing": [
+    "No evidence in this artifact proves that results/experiments/production_424_results.json was produced directly by the current producer blob without manual copying or relocation.",
+    "Exact Python, PyTorch, pandas, CUDA, and driver versions for the historical run are not bound to the persisted result.",
+    "The historical run timestamp is unknown.",
+    "No untouched validation window independent of checkpoint selection is persisted.",
+    "No official evaluation-API output, Kaggle submission ID, public score, or private score is linked to this result."
+  ]
+}
