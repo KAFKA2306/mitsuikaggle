@@ -33,6 +33,7 @@ jobs:
 
           csv_path = Path("results/experiments/ACTUAL_EXPERIMENT_RESULTS.csv")
           json_path = Path("results/experiments/production_424_results.json")
+          metric_path = Path("results/experiments/competition_metric_reference.json")
           readme = Path("README.md").read_text(encoding="utf-8")
 
           with csv_path.open(newline="", encoding="utf-8") as handle:
@@ -62,6 +63,25 @@ jobs:
               raise SystemExit("unexpected 424-target artifact schema")
           if min(production["samples"], production["features"], production["targets"]) <= 0:
               raise SystemExit("non-positive experiment dimensions")
+
+          metric = json.loads(metric_path.read_text(encoding="utf-8"))
+          if metric.get("schema") != "mitsuikaggle.competition-metric-reference.v2":
+              raise SystemExit("unexpected competition metric reference schema")
+          verified = metric.get("verified_contract", {})
+          if verified.get("correlation") != "Spearman rank correlation":
+              raise SystemExit("competition metric correlation contract drifted")
+          if verified.get("correlation_axis") != "cross-sectional across scored targets for each date":
+              raise SystemExit("competition metric axis contract drifted")
+          ignored = metric.get("target_contract", {}).get("ignored_for_scoring_but_prediction_required", [])
+          expected_ignored = ["target_82", "target_173", "target_241", "target_404"]
+          if ignored != expected_ignored:
+              raise SystemExit("ignored target contract drifted")
+          for local_name in ("direct_execution_results", "production_424_results"):
+              audit = metric.get("repository_metric_audit", {}).get(local_name, {})
+              if audit.get("competition_axis_match") is not False or audit.get("metric_equivalent_claim") is not False:
+                  raise SystemExit(f"historical local metric overclaim in {local_name}")
+          if not metric.get("unresolved_exact_implementation_semantics"):
+              raise SystemExit("exact metric uncertainties must remain explicit until official code is reproduced")
 
           for referenced in (csv_path, json_path):
               if str(referenced) not in readme:
