@@ -1,0 +1,33 @@
+{
+  "schema": "mitsuikaggle.competition-metric-reference.v1",
+  "competition": "MITSUI&CO. Commodity Prediction Challenge",
+  "official_url": "https://www.kaggle.com/competitions/mitsui-commodity-prediction-challenge",
+  "official_textual_definition": "The competition metric is a variant of the Sharpe ratio, computed by dividing the mean Spearman rank correlation between the predictions and targets by the standard deviation.",
+  "official_submission_constraint": "Submissions use the provided evaluation API to prevent looking forward in time.",
+  "repository_metric_audit": {
+    "direct_execution_results": {
+      "path": "scripts/DIRECT_EXECUTION_RESULTS.py",
+      "correlation": "Spearman",
+      "aggregation_axis": "compute one correlation per target over holdout rows, then mean/std across target correlations",
+      "metric_equivalent_claim": false
+    },
+    "production_424_results": {
+      "path": "scripts/final_424_production.py",
+      "correlation": "Pearson",
+      "aggregation_axis": "compute one correlation per target over holdout rows, then mean/std across target correlations",
+      "metric_equivalent_claim": false
+    }
+  },
+  "claim_policy": {
+    "allowed": [
+      "Describe historical scores as repository-local metrics with their exact correlation type, sample count, target count, split, and aggregation axis.",
+      "Compare two local methods only when they use the same local metric and data contract."
+    ],
+    "blocked_until_official_metric_code_is_reproduced": [
+      "Call a repository-local score a Kaggle validation score.",
+      "Compare repository-local score magnitude directly with leaderboard score magnitude.",
+      "Claim competition-equivalent validation from the official page's prose definition alone."
+    ]
+  },
+  "next_required_evidence": "Reproduce or vendor the official competition metric implementation from an authoritative Kaggle source, bind its aggregation axis and null/tie semantics, and add deterministic fixtures before creating a new 424-target benchmark."
+}
