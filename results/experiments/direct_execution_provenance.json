@@ -1,0 +1,70 @@
+{
+  "schema": "mitsuikaggle.experiment-provenance.v1",
+  "experiment_id": "direct-execution-results",
+  "status": "partially_reconstructable_not_reexecuted",
+  "claim_scope": "local subset experiment; not Kaggle leaderboard evidence",
+  "producer": {
+    "path": "scripts/DIRECT_EXECUTION_RESULTS.py",
+    "git_blob_sha": "9f405c6b6b202238ecfaa1fb13283854ac3dd8a9"
+  },
+  "inputs": [
+    {
+      "path": "input/train.csv",
+      "git_blob_sha": "70c3f303d92c99016fb8d3c47adb6d3483ee18a6",
+      "bytes": 8548317,
+      "rows_consumed_by_script": 200
+    },
+    {
+      "path": "input/train_labels.csv",
+      "git_blob_sha": "a13e620c49e71816d4be4482753a54aa2e31bb84",
+      "bytes": 14203539,
+      "rows_consumed_by_script": 200
+    }
+  ],
+  "selection": {
+    "feature_count": 10,
+    "feature_rule": "first 10 train.csv columns excluding date_id",
+    "target_count": 5,
+    "target_rule": "first 5 train_labels.csv columns whose names start with target_"
+  },
+  "split": {
+    "kind": "chronological_holdout_by_row_order",
+    "train_fraction": 0.75,
+    "train_rows_expected": 150,
+    "test_rows_expected": 50,
+    "shuffle": false
+  },
+  "random_seed": 42,
+  "methods": [
+    "Single Model (LightGBM)",
+    "Classical Ensemble (LGB+XGB)",
+    "Multi-Model Ensemble (LGB+XGB+RF)"
+  ],
+  "metric": {
+    "local_name": "sharpe_like_score",
+    "definition": "mean Spearman correlation across the 5 selected targets divided by the standard deviation of those 5 target-level correlations",
+    "competition_relation": "same high-level mean-Spearman/std structure as the Kaggle competition metric, but evaluated only on this local 5-target, 50-row holdout and not through the official evaluation API",
+    "official_competition_url": "https://www.kaggle.com/competitions/mitsui-commodity-prediction-challenge"
+  },
+  "persisted_result": {
+    "path": "results/experiments/ACTUAL_EXPERIMENT_RESULTS.csv",
+    "git_blob_sha": "553147aefdbc091aa32a1fd8183590f362f99573",
+    "best_method": "Multi-Model Ensemble (LGB+XGB+RF)",
+    "best_sharpe_like_score": 0.8124891419299423,
+    "baseline_method": "Single Model (LightGBM)",
+    "baseline_sharpe_like_score": 0.3662798420708296,
+    "relative_improvement_percent": 121.82196468590448
+  },
+  "verified_connections": [
+    "The persisted CSV values match the three method summaries encoded by DIRECT_EXECUTION_RESULTS.py.",
+    "The reported approximately 121.8% improvement is reproducible algebraically from the persisted best and baseline sharpe_like_score values.",
+    "The producer script explicitly limits the experiment to 200 input rows, 10 features, 5 targets, and a 75/25 chronological split."
+  ],
+  "unverified_or_missing": [
+    "No evidence in this artifact proves that results/experiments/ACTUAL_EXPERIMENT_RESULTS.csv was produced directly by the current producer blob without manual copying or relocation.",
+    "The script writes ACTUAL_EXPERIMENT_RESULTS.csv in the working directory, while the persisted artifact is under results/experiments/.",
+    "Exact Python, LightGBM, XGBoost, scikit-learn, pandas, NumPy, and SciPy versions for the historical run are not bound to the persisted result.",
+    "The historical run timestamp and runtime environment are unknown.",
+    "No Kaggle submission ID, public/private leaderboard score, or official evaluation-API run is linked to this result."
+  ]
+}
