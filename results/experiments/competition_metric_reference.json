@@ -1,33 +1,70 @@
 {
-  "schema": "mitsuikaggle.competition-metric-reference.v1",
+  "schema": "mitsuikaggle.competition-metric-reference.v2",
   "competition": "MITSUI&CO. Commodity Prediction Challenge",
   "official_url": "https://www.kaggle.com/competitions/mitsui-commodity-prediction-challenge",
   "official_textual_definition": "The competition metric is a variant of the Sharpe ratio, computed by dividing the mean Spearman rank correlation between the predictions and targets by the standard deviation.",
   "official_submission_constraint": "Submissions use the provided evaluation API to prevent looking forward in time.",
+  "problem_design_source": {
+    "url": "https://zenn.dev/gamella/articles/7e944bd18cdbe6",
+    "author": "Tomoya Kitayama",
+    "authority": "The author states that he was responsible for the problem design of this Mitsui & Co. Kaggle competition and published the design details with Mitsui & Co.'s approval.",
+    "evaluation_unit": "date",
+    "cross_section": "For each date t, compute Spearman rank correlation across target columns between predictions and actual targets.",
+    "score_aggregation": "Take mean(IC_t) divided by std(IC_t) across dates."
+  },
+  "target_contract": {
+    "submitted_target_count": 424,
+    "submitted_target_range": "target_0 through target_423",
+    "ignored_for_scoring_but_prediction_required": [
+      "target_82",
+      "target_173",
+      "target_241",
+      "target_404"
+    ],
+    "ignored_target_source": "https://www.kaggle.com/competitions/mitsui-commodity-prediction-challenge/discussion/606650",
+    "ignored_target_authority": "Kaggle Staff states that these targets remain in the prediction schema, require non-null predictions, and are ignored for scoring."
+  },
   "repository_metric_audit": {
     "direct_execution_results": {
       "path": "scripts/DIRECT_EXECUTION_RESULTS.py",
       "correlation": "Spearman",
       "aggregation_axis": "compute one correlation per target over holdout rows, then mean/std across target correlations",
+      "competition_axis_match": false,
       "metric_equivalent_claim": false
     },
     "production_424_results": {
       "path": "scripts/final_424_production.py",
       "correlation": "Pearson",
       "aggregation_axis": "compute one correlation per target over holdout rows, then mean/std across target correlations",
+      "competition_axis_match": false,
       "metric_equivalent_claim": false
     }
   },
+  "verified_contract": {
+    "correlation": "Spearman rank correlation",
+    "correlation_axis": "cross-sectional across scored targets for each date",
+    "final_aggregation_axis": "across daily IC values",
+    "score_form": "mean(daily_IC) / std(daily_IC)",
+    "prediction_schema_keeps_ignored_targets": true
+  },
+  "unresolved_exact_implementation_semantics": [
+    "Exact Kaggle metric source code linked from the competition page was not retrievable in this run.",
+    "Standard-deviation degrees of freedom are not fixed by the prose/design sources alone.",
+    "Exact rank tie handling is not fixed by the prose/design sources alone.",
+    "Exact NaN/missing-value handling beyond the four explicitly ignored targets is not fixed by the retrieved authoritative sources."
+  ],
   "claim_policy": {
     "allowed": [
-      "Describe historical scores as repository-local metrics with their exact correlation type, sample count, target count, split, and aggregation axis.",
+      "Describe the competition evaluation as daily cross-sectional Spearman IC followed by mean/std across dates.",
+      "Exclude target_82, target_173, target_241, and target_404 from local scoring while still emitting non-null predictions for them.",
+      "Describe historical repository scores as repository-local metrics with their exact correlation type, sample count, target count, split, and aggregation axis.",
       "Compare two local methods only when they use the same local metric and data contract."
     ],
     "blocked_until_official_metric_code_is_reproduced": [
       "Call a repository-local score a Kaggle validation score.",
       "Compare repository-local score magnitude directly with leaderboard score magnitude.",
-      "Claim competition-equivalent validation from the official page's prose definition alone."
+      "Claim bit-for-bit competition-metric equivalence before exact std, tie, and missing-value semantics are reproduced from the official metric implementation."
     ]
   },
-  "next_required_evidence": "Reproduce or vendor the official competition metric implementation from an authoritative Kaggle source, bind its aggregation axis and null/tie semantics, and add deterministic fixtures before creating a new 424-target benchmark."
+  "next_required_evidence": "Retrieve the exact Kaggle metric implementation linked from the official competition page, then freeze std/tie/missing semantics in deterministic fixtures before training a new 424-target benchmark."
 }
