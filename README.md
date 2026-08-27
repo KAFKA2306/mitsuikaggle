@@ -27,7 +27,7 @@ Make every reported result answer four questions directly: **which data, which s
 
 [`results/experiments/direct_execution_provenance.json`](results/experiments/direct_execution_provenance.json) binds the historical three-model comparison to:
 
-- producer: `scripts/DIRECT_EXECUTION_RESULTS.py` blob `9f405c6b6b202238ecfaa1fb13283854ac3dd8a9`
+- producer blob `9f405c6b6b202238ecfaa1fb13283854ac3dd8a9` recorded in the provenance manifest
 - input `train.csv` blob `70c3f303d92c99016fb8d3c47adb6d3483ee18a6`
 - input `train_labels.csv` blob `a13e620c49e71816d4be4482753a54aa2e31bb84`
 - first 200 rows
@@ -54,7 +54,7 @@ Historical package versions, exact run timestamp/runtime, direct producer-to-per
 
 [`results/experiments/production_424_provenance.json`](results/experiments/production_424_provenance.json) binds [`results/experiments/production_424_results.json`](results/experiments/production_424_results.json) to:
 
-- producer: `scripts/final_424_production.py` blob `7fbde6a3731418e73283ed1a3c4b82d564796e07`
+- producer blob `7fbde6a3731418e73283ed1a3c4b82d564796e07` recorded in the provenance manifest
 - the same two input blobs above
 - 1,917 reported merged samples
 - 557 features
