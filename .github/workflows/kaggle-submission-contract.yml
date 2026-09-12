@@ -1,0 +1,30 @@
+name: Kaggle submission contract
+
+on:
+  pull_request:
+    paths:
+      - "scripts/submit_to_kaggle.py"
+      - "test_submit_to_kaggle.py"
+      - ".github/workflows/kaggle-submission-contract.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/submit_to_kaggle.py"
+      - "test_submit_to_kaggle.py"
+      - ".github/workflows/kaggle-submission-contract.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile submission workflow
+        run: python -m py_compile scripts/submit_to_kaggle.py test_submit_to_kaggle.py
+      - name: Verify fail-closed submission contract
+        run: python -m unittest -v test_submit_to_kaggle
